@@ -1,52 +1,49 @@
-# AmalAndCompany-technical-task
+# Laravel Technical Task
 
-## Configuration
+This repository contains the implementation of a Laravel application for a technical task involving the retrieval and updating of business names from an external API (specifically Airtable).
 
-Update the `.env` file with your configuration settings:
+## Project Structure
 
-- Set `DB_CONNECTION`, `DB_HOST`, `DB_PORT`, `DB_DATABASE`, `DB_USERNAME`, and `DB_PASSWORD` for your database connection.
-- Set `AIRTABLE_API_KEY`, `AIRTABLE_BASE_ID`, and `AIRTABLE_TABLE` for Airtable integration.
+The project directory structure is as follows:
+
+- **app/Console/Commands/RetrieveAndUpdateBusinessesNamesCommand.php**: This file contains the implementation of the console command responsible for retrieving and updating business names.
+
+- **app/Exceptions/AirtableException.php**: Custom exception class for handling Airtable-related errors.
+
+- **app/Exceptions/BusinessException.php**: Custom exception class for handling business-related errors.
+
+- **app/Repositories/BusinessRepositoryInterface.php**: Interface defining the contract for business repository classes.
+
+- **app/Repositories/AirtableBusinessRepository.php**: Implementation of the business repository interface for fetching data from Airtable.
+
+- **app/Services/BusinessService.php**: Implementation of the business service interface for interacting with business data.
+
+- **config/services.php**: Configuration file containing third-party service credentials, including Airtable configuration.
+
+- **.env**: Environment configuration file containing application-specific settings such as database connection details, API keys, and service URLs.
+
+- **.env.example**: Example environment configuration file containing placeholders for sensitive information.
 
 ## Usage
 
-To use the application, follow these steps:
+To use this application, follow these steps:
 
-1. Start the development server:
-    ```bash
-    php artisan serve
-    ```
-   
-## Command Usage
+1. Clone the repository to your local machine.
+2. Navigate to the project directory.
+3. Run `composer install` to install the project dependencies.
+4. Rename the `.env.example` file to `.env` and fill in the required environment variables, such as database connection details and Airtable API key.
+5. Run `php artisan key:generate` to generate an application key.
 
-Alternatively, you can use the command line to retrieve and update business data:
+## Commands
 
-```bash
-php artisan businesses:update
-```
+The main command provided by this application is:
 
-## Dependencies
+- `php artisan businesses:update`: This command retrieves data from the Business Database table and updates business names accordingly.
 
-- PHP >= 8.1
-- composer
+## Testing
 
-## Directory Structure
+Unit tests for the application can be found in the `tests` directory. To run the tests, execute `php artisan test`.
 
-- technical-task/
-    - app/
-        - Console/
-            - Commands/
-                - RetrieveAndUpdateBusinessesNamesCommand.php
-        - Exceptions/
-            - BusinessException.php
-        - Repositories/
-            - AirtableBusinessRepository.php
-            - BusinessRepositoryInterface.php
-        - Services/
-            - BusinessService.php
-            - BusinessServiceInterface.php
-    - config/
-        - services.php
-    - .env
+## Credits
 
-## Environment Variables
-Update the .env file with your environment variables, including Airtable API credentials, etc.
+This Laravel application was created by Abdelrahman Elmaghraby. Feel free to contact ab.mghrby@gmail.com for any inquiries or support.
