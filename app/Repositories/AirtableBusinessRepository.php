@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use JsonException;
 
-class AirtableBusinessRepository implements BusinessRepositoryInterface
+class AirtableBusinessRepository implements IBusinessRepositoryInterface
 {
     protected string $apiKey;
     protected string $baseUrl;

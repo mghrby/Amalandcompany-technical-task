@@ -3,7 +3,7 @@
 namespace Tests\Unit\Console\Commands;
 
 use App\Console\Commands\RetrieveAndUpdateBusinessesNamesCommand;
-use App\Services\BusinessServiceInterface;
+use App\Services\IBusinessServiceInterface;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 use Mockery;
@@ -15,8 +15,8 @@ class RetrieveAndUpdateBusinessesNamesCommandTest extends TestCase
      */
     public function testHandleSuccessfullyRetrievesAndUpdatesBusinesses(): void
     {
-        // Mock BusinessServiceInterface
-        $businessServiceMock = Mockery::mock(BusinessServiceInterface::class);
+        // Mock IBusinessServiceInterface
+        $businessServiceMock = Mockery::mock(IBusinessServiceInterface::class);
 
         // Mock retrieved businesses
         $businesses = [
@@ -66,8 +66,8 @@ class RetrieveAndUpdateBusinessesNamesCommandTest extends TestCase
      */
     public function testHandleHandlesBusinessException(): void
     {
-        // Mock BusinessServiceInterface to throw a BusinessException
-        $businessServiceMock = Mockery::mock(BusinessServiceInterface::class);
+        // Mock IBusinessServiceInterface to throw a BusinessException
+        $businessServiceMock = Mockery::mock(IBusinessServiceInterface::class);
         $businessServiceMock
             ->expects('getAllBusinesses')
             ->andThrow(new \App\Exceptions\BusinessException('No businesses found.'));
@@ -93,8 +93,8 @@ class RetrieveAndUpdateBusinessesNamesCommandTest extends TestCase
      */
     public function testHandleHandlesUnexpectedException(): void
     {
-        // Mock BusinessServiceInterface to throw an exception
-        $businessServiceMock = Mockery::mock(BusinessServiceInterface::class);
+        // Mock IBusinessServiceInterface to throw an exception
+        $businessServiceMock = Mockery::mock(IBusinessServiceInterface::class);
         $businessServiceMock
             ->expects('getAllBusinesses')
             ->andThrow(new \Exception('Unexpected error occurred.'));

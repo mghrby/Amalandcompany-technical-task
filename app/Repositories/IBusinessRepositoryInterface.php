@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-interface BusinessRepositoryInterface
+interface IBusinessRepositoryInterface
 {
     public function getAll();
     public function update(array $data);

@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use App\Services\BusinessServiceInterface;
+use App\Services\IBusinessServiceInterface;
 use App\Exceptions\BusinessException;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -19,12 +19,12 @@ class RetrieveAndUpdateBusinessesNamesCommand extends Command
     /**
      * Class constructor.
      *
-     * @param BusinessServiceInterface $businessService The business service dependency.
+     * @param IBusinessServiceInterface $businessService The business service dependency.
      * @param ConsoleOutput $output The console output
      */
     public function __construct(
-        protected BusinessServiceInterface $businessService,
-        ConsoleOutput $output
+        protected IBusinessServiceInterface $businessService,
+        ConsoleOutput                       $output
     )
     {
         parent::__construct();

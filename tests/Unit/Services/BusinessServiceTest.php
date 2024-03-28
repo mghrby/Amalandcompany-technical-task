@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Services;
 
-use App\Repositories\BusinessRepositoryInterface;
+use App\Repositories\IBusinessRepositoryInterface;
 use App\Services\BusinessService;
 use PHPUnit\Framework\TestCase;
 use Mockery;
 
 class BusinessServiceTest extends TestCase
 {
-    protected BusinessRepositoryInterface $businessRepositoryMock;
+    protected IBusinessRepositoryInterface $businessRepositoryMock;
     protected BusinessService $businessService;
 
     /**
@@ -20,8 +20,8 @@ class BusinessServiceTest extends TestCase
         // Call the parent setUp method
         parent::setUp();
 
-        // Create a mock for the BusinessRepositoryInterface
-        $this->businessRepositoryMock = Mockery::mock(BusinessRepositoryInterface::class);
+        // Create a mock for the IBusinessRepositoryInterface
+        $this->businessRepositoryMock = Mockery::mock(IBusinessRepositoryInterface::class);
 
         // Instantiate the BusinessService class with the mock repository
         $this->businessService = new BusinessService($this->businessRepositoryMock);

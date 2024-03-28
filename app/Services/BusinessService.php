@@ -2,17 +2,17 @@
 
 namespace App\Services;
 
-use App\Repositories\BusinessRepositoryInterface;
+use App\Repositories\IBusinessRepositoryInterface;
 
-class BusinessService implements BusinessServiceInterface
+class BusinessService implements IBusinessServiceInterface
 {
 
     /**
      * Constructor for initializing the BusinessService class.
      *
-     * @param BusinessRepositoryInterface $businessRepository The repository for business data.
+     * @param IBusinessRepositoryInterface $businessRepository The repository for business data.
      */
-    public function __construct(protected BusinessRepositoryInterface $businessRepository)
+    public function __construct(protected IBusinessRepositoryInterface $businessRepository)
     {
     }
 

@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-interface BusinessServiceInterface
+interface IBusinessServiceInterface
 {
     public function getAllBusinesses(): array;
     public function batchUpdateBusinessName(
