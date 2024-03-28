@@ -2,14 +2,14 @@
 
 namespace Tests\Unit\Services;
 
-use App\Repositories\IBusinessRepositoryInterface;
+use App\Repositories\IBusinessRepository;
 use App\Services\BusinessService;
 use PHPUnit\Framework\TestCase;
 use Mockery;
 
 class BusinessServiceTest extends TestCase
 {
-    protected IBusinessRepositoryInterface $businessRepositoryMock;
+    protected IBusinessRepository $businessRepositoryMock;
     protected BusinessService $businessService;
 
     /**
@@ -20,8 +20,8 @@ class BusinessServiceTest extends TestCase
         // Call the parent setUp method
         parent::setUp();
 
-        // Create a mock for the IBusinessRepositoryInterface
-        $this->businessRepositoryMock = Mockery::mock(IBusinessRepositoryInterface::class);
+        // Create a mock for the IBusinessRepository
+        $this->businessRepositoryMock = Mockery::mock(IBusinessRepository::class);
 
         // Instantiate the BusinessService class with the mock repository
         $this->businessService = new BusinessService($this->businessRepositoryMock);
@@ -46,11 +46,11 @@ class BusinessServiceTest extends TestCase
         // Arrange
         // Mock the businessRepository getAll method to return an empty array
         $this->businessRepositoryMock
-            ->expects('getAll')
+            ->expects('getAllByQueryParameters')
             ->andReturns([]);
 
         // Act
-        $result = $this->businessService->getAllBusinesses();
+        $result = $this->businessService->businessesLookup();
 
         // Assert
         // Verify that the result is an array
@@ -88,11 +88,11 @@ class BusinessServiceTest extends TestCase
 
         // Mock the BusinessRepository's getAll method to return the businesses
         $this->businessRepositoryMock
-            ->expects('getAll')
+            ->expects('getAllByQueryParameters')
             ->andReturns($businesses);
 
         // Act
-        $result = $this->businessService->getAllBusinesses();
+        $result = $this->businessService->businessesLookup();
 
         // Assert
         // Check if the returned result matches the expected businesses

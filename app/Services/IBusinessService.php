@@ -2,9 +2,9 @@
 
 namespace App\Services;
 
-interface IBusinessServiceInterface
+interface IBusinessService
 {
-    public function getAllBusinesses(): array;
+    public function businessesLookup(): array;
     public function batchUpdateBusinessName(
         array $records,
         array $fields = ['Business Name' => 'Airotax']

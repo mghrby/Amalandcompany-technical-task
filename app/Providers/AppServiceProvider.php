@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use App\Repositories\AirtableBusinessRepository;
-use App\Repositories\IBusinessRepositoryInterface;
+use App\Repositories\IBusinessRepository;
 use App\Services\BusinessService;
-use App\Services\IBusinessServiceInterface;
+use App\Services\IBusinessService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -16,12 +16,12 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->app->bind(
-            IBusinessServiceInterface::class,
+            IBusinessService::class,
             BusinessService::class
         );
 
         $this->app->bind(
-            IBusinessRepositoryInterface::class,
+            IBusinessRepository::class,
             AirtableBusinessRepository::class
         );
     }

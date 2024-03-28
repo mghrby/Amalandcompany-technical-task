@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Exception;
 use Illuminate\Console\Command;
-use App\Services\IBusinessServiceInterface;
+use App\Services\IBusinessService;
 use App\Exceptions\BusinessException;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\Console\Output\ConsoleOutput;
@@ -19,12 +19,12 @@ class RetrieveAndUpdateBusinessesNamesCommand extends Command
     /**
      * Class constructor.
      *
-     * @param IBusinessServiceInterface $businessService The business service dependency.
+     * @param IBusinessService $businessService The business service dependency.
      * @param ConsoleOutput $output The console output
      */
     public function __construct(
-        protected IBusinessServiceInterface $businessService,
-        ConsoleOutput                       $output
+        protected IBusinessService $businessService,
+        ConsoleOutput              $output
     )
     {
         parent::__construct();
@@ -37,14 +37,10 @@ class RetrieveAndUpdateBusinessesNamesCommand extends Command
     public function handle(): int
     {
         try {
-            // Retrieve all businesses
-            $this->info('Retrieving businesses...');
-            $businesses = $this->businessService->getAllBusinesses();
-            Log::info(json_encode($businesses, JSON_THROW_ON_ERROR));
+            // Retrieve businesses
+            $businesses = $this->businessesLookup();
 
-            if (empty($businesses)) {
-                throw new BusinessException('No businesses found.');
-            }
+            Log::info(json_encode($businesses, JSON_THROW_ON_ERROR));
 
             // Log the number of businesses retrieved
             $this->info(
@@ -56,6 +52,7 @@ class RetrieveAndUpdateBusinessesNamesCommand extends Command
 
             // Update business names
             $this->updateBusinessNames($businesses);
+
             return 0;
         } catch (BusinessException $e) {
             $this->logBusinessError($e);
@@ -64,6 +61,22 @@ class RetrieveAndUpdateBusinessesNamesCommand extends Command
             $this->logUnexpectedError($e);
             return 2;
         }
+    }
+
+    /**
+     * @throws BusinessException
+     */
+    private function businessesLookup(): array
+    {
+        $this->info('Retrieving businesses...');
+        // Retrieve all businesses
+        $businesses = $this->businessService->businessesLookup();
+
+        if (empty($businesses)) {
+            throw new BusinessException('No businesses found.');
+        }
+
+        return $businesses;
     }
 
     /**
@@ -95,6 +108,6 @@ class RetrieveAndUpdateBusinessesNamesCommand extends Command
      */
     private function logUnexpectedError(Exception $e): void
     {
-        $this->error('An unexpected error occurred: ' . $e->getMessage());
+        $this->error('An unexpected error occurred: ' . $e->getMessage() . ' (' . $e->getFile() . ':' . $e->getLine() . ')');
     }
 }

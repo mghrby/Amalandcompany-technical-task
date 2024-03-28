@@ -3,7 +3,7 @@
 namespace Tests\Unit\Console\Commands;
 
 use App\Console\Commands\RetrieveAndUpdateBusinessesNamesCommand;
-use App\Services\IBusinessServiceInterface;
+use App\Services\IBusinessService;
 use Illuminate\Support\Facades\Log;
 use Tests\TestCase;
 use Mockery;
@@ -15,8 +15,8 @@ class RetrieveAndUpdateBusinessesNamesCommandTest extends TestCase
      */
     public function testHandleSuccessfullyRetrievesAndUpdatesBusinesses(): void
     {
-        // Mock IBusinessServiceInterface
-        $businessServiceMock = Mockery::mock(IBusinessServiceInterface::class);
+        // Mock IBusinessService
+        $businessServiceMock = Mockery::mock(IBusinessService::class);
 
         // Mock retrieved businesses
         $businesses = [
@@ -37,7 +37,7 @@ class RetrieveAndUpdateBusinessesNamesCommandTest extends TestCase
         ];
 
         $businessServiceMock
-            ->expects('getAllBusinesses')
+            ->expects('businessesLookup')
             ->andReturns($businesses);
         $businessServiceMock
             ->expects('batchUpdateBusinessName')
@@ -66,10 +66,10 @@ class RetrieveAndUpdateBusinessesNamesCommandTest extends TestCase
      */
     public function testHandleHandlesBusinessException(): void
     {
-        // Mock IBusinessServiceInterface to throw a BusinessException
-        $businessServiceMock = Mockery::mock(IBusinessServiceInterface::class);
+        // Mock IBusinessService to throw a BusinessException
+        $businessServiceMock = Mockery::mock(IBusinessService::class);
         $businessServiceMock
-            ->expects('getAllBusinesses')
+            ->expects('businessesLookup')
             ->andThrow(new \App\Exceptions\BusinessException('No businesses found.'));
 
         // Mock ConsoleOutput
@@ -93,10 +93,10 @@ class RetrieveAndUpdateBusinessesNamesCommandTest extends TestCase
      */
     public function testHandleHandlesUnexpectedException(): void
     {
-        // Mock IBusinessServiceInterface to throw an exception
-        $businessServiceMock = Mockery::mock(IBusinessServiceInterface::class);
+        // Mock IBusinessService to throw an exception
+        $businessServiceMock = Mockery::mock(IBusinessService::class);
         $businessServiceMock
-            ->expects('getAllBusinesses')
+            ->expects('businessesLookup')
             ->andThrow(new \Exception('Unexpected error occurred.'));
 
         // Mock ConsoleOutput

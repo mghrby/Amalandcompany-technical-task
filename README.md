@@ -16,13 +16,13 @@ The project directory structure is as follows:
 
 - **app/Exceptions/BusinessException.php**: Custom exception class for handling business-related errors.
 
-- **app/Repositories/BusinessRepositoryInterface.php**: Interface defining the contract for business repository classes.
+- **app/Repositories/BusinessRepository.php**: Interface defining the contract for business repository classes.
 
 - **app/Repositories/AirtableBusinessRepository.php**: Implementation of the business repository interface for fetching data from Airtable.
 
 - **app/Services/BusinessService.php**: Implementation of the business service interface for interacting with business data.
 
-- **app/Services/IBusinessServiceInterface.php**: Interface defining the contract for business repository classes.
+- **app/Services/IBusinessService.php**: Interface defining the contract for business service classes.
 
 - **config/services.php**: Configuration file containing third-party service credentials, including Airtable configuration.
 

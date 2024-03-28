@@ -8,17 +8,23 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use JsonException;
 
-class AirtableBusinessRepository implements IBusinessRepositoryInterface
+class AirtableBusinessRepository implements IBusinessRepository
 {
     protected string $apiKey;
     protected string $baseUrl;
     protected string $baseId;
     protected string $table;
+    protected string $airTableBusinessUrl;
 
     /**
      * Constructor for initializing AirtableService with base URL, API key, base ID, and table name.
      */
     public function __construct()
+    {
+        $this->init();
+    }
+
+    private function init(): void
     {
         // Get base URL from configuration
         $this->baseUrl = config('services.airtable.base_url');
@@ -31,6 +37,16 @@ class AirtableBusinessRepository implements IBusinessRepositoryInterface
 
         // Get table name from configuration
         $this->table = config('services.airtable.table');
+
+        $this->airTableBusinessUrl = $this->baseUrl . "{$this->baseId}/{$this->table}";
+    }
+
+    private function httpClient(): \Illuminate\Http\Client\PendingRequest
+    {
+        return Http::withHeaders([
+            'Authorization' => 'Bearer ' . $this->apiKey,
+            'Content-Type' => 'application/json',
+        ]);
     }
 
     /**
@@ -40,14 +56,12 @@ class AirtableBusinessRepository implements IBusinessRepositoryInterface
      * @throws AirtableException
      * @throws RequestException|JsonException if the request fails
      */
-    public function getAll()
+    public function getAllByQueryParameters(string $queryParameters): array
     {
         // Send a GET request to the API with the necessary headers
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiKey,
-            'Content-Type' => 'application/json',
-        ])->get(
-            $this->baseUrl . "{$this->baseId}/{$this->table}?fields%5B%5D=Business+Name&filterByFormula=SEARCH(%22Test%22%2C%7BBusiness+Name%7D)"
+        $response =$this->httpClient()
+            ->get(
+            "{$this->airTableBusinessUrl}?{$queryParameters}"
         );
 
         // Throw an exception if the request failed
@@ -83,10 +97,8 @@ class AirtableBusinessRepository implements IBusinessRepositoryInterface
     public function update(array $data)
     {
         // Send a PATCH request to update records
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $this->apiKey,
-            'Content-Type' => 'application/json',
-        ])->patch($this->baseUrl . "{$this->baseId}/{$this->table}", ['records' => $data]);
+        $response =$this->httpClient()
+            ->patch($this->airTableBusinessUrl, ['records' => $data]);
 
         // Throw an exception if the request failed
         $response->throw();

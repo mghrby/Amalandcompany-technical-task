@@ -2,17 +2,18 @@
 
 namespace App\Services;
 
-use App\Repositories\IBusinessRepositoryInterface;
+use App\Repositories\IBusinessRepository;
 
-class BusinessService implements IBusinessServiceInterface
+class BusinessService implements IBusinessService
 {
 
+    private string $queryParameters = "fields%5B%5D=Business+Name&filterByFormula=SEARCH(%22Test%22%2C%7BBusiness+Name%7D)";
     /**
      * Constructor for initializing the BusinessService class.
      *
-     * @param IBusinessRepositoryInterface $businessRepository The repository for business data.
+     * @param IBusinessRepository $businessRepository The repository for business data.
      */
-    public function __construct(protected IBusinessRepositoryInterface $businessRepository)
+    public function __construct(protected IBusinessRepository $businessRepository)
     {
     }
 
@@ -21,10 +22,10 @@ class BusinessService implements IBusinessServiceInterface
      *
      * @return array
      */
-    public function getAllBusinesses(): array
+    public function businessesLookup(): array
     {
         // Retrieve all businesses from the repository
-        return $this->businessRepository->getAll();
+        return $this->businessRepository->getAllByQueryParameters($this->queryParameters);
     }
 
     /**
