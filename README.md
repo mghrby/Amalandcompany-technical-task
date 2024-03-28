@@ -2,6 +2,10 @@
 
 This repository contains the implementation of a Laravel application for a technical task involving the retrieval and updating of business names from an external API (specifically Airtable).
 
+## Requirements
+- PHP version >= 8.1
+- Composer
+
 ## Project Structure
 
 The project directory structure is as follows:
