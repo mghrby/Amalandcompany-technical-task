@@ -22,6 +22,8 @@ The project directory structure is as follows:
 
 - **app/Services/BusinessService.php**: Implementation of the business service interface for interacting with business data.
 
+- **app/Services/IBusinessServiceInterface.php**: Interface defining the contract for business repository classes.
+
 - **config/services.php**: Configuration file containing third-party service credentials, including Airtable configuration.
 
 - **.env**: Environment configuration file containing application-specific settings such as database connection details, API keys, and service URLs.
