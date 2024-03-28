@@ -36,18 +36,37 @@ To use this application, follow these steps:
 
 1. Clone the repository to your local machine.
 2. Navigate to the project directory.
-3. Run ```bash composer install ``` to install the project dependencies.
-4. copy the `.env.example` file to `.env` ```bash cp ./.env.example ./.env ``` and fill in the required environment variables, such as Airtable API key.
+3. Run 
+    ```bash 
+    composer install 
+    ```
+   to install the project dependencies.
+
+4. copy the `.env.example` file to `.env` 
+    ```bash 
+    cp ./.env.example ./.env 
+    ``` 
+   and fill in the required environment variables, such as Airtable API key.
+5. Run 
+    ```bash
+    php artisan key:generate 
+    ``` 
+  to generate an application key.
 
 ## Commands
 
 The main command provided by this application is:
-
-- ```bash php artisan businesses:update ```: This command retrieves data from the Business Database table and updates business names accordingly.
+```bash
+php artisan businesses:update 
+```
+This command retrieves data from the Business Database table and updates business names accordingly.
 
 ## Testing
 
-Unit tests for the application can be found in the `tests` directory. To run the tests, execute ```bash php artisan test ```.
+Unit tests for the application can be found in the `tests` directory. To run the tests, execute 
+```bash 
+php artisan test 
+```
 
 ## Credits
 
