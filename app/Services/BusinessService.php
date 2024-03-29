@@ -7,7 +7,7 @@ use App\Repositories\IBusinessRepository;
 class BusinessService implements IBusinessService
 {
 
-    private string $queryParameters = "fields%5B%5D=Business+Name&filterByFormula=SEARCH(%22Test%22%2C%7BBusiness+Name%7D)";
+    private string $queryParameters = "fields%5B%5D=Business+Name&filterByFormula=REGEX_MATCH(%7BBusiness+Name%7D%2C+%22Test%22)";
     /**
      * Constructor for initializing the BusinessService class.
      *
