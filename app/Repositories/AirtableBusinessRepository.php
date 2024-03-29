@@ -56,13 +56,12 @@ class AirtableBusinessRepository implements IBusinessRepository
      * @throws AirtableException
      * @throws RequestException|JsonException if the request fails
      */
-    public function getAllByQueryParameters(string $queryParameters): array
+    public function getAllByQueryParameters(array $queryParameters): array
     {
         // Send a GET request to the API with the necessary headers
         $response =$this->httpClient()
-            ->get(
-            "{$this->airTableBusinessUrl}?{$queryParameters}"
-        );
+            ->withQueryParameters($queryParameters)
+            ->get($this->airTableBusinessUrl);
 
         // Throw an exception if the request failed
         $response->throw();
