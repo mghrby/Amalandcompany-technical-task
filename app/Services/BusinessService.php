@@ -23,13 +23,13 @@ class BusinessService implements IBusinessService
     }
 
     /**
-     * Retrieve all businesses from the repository.
+     * Retrieve businesses based on query parameters.
      *
-     * @return array
+     * @return array List of businesses
      */
     public function businessesLookup(): array
     {
-        // Retrieve all businesses from the repository
+        // Retrieve all businesses from the repository based on the query parameters
         return $this->businessRepository->getAllByQueryParameters($this->queryParameters);
     }
 

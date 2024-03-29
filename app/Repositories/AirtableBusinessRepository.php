@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Exceptions\AirtableException;
+use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -21,9 +22,13 @@ class AirtableBusinessRepository implements IBusinessRepository
      */
     public function __construct()
     {
+        // Call the initialization function
         $this->init();
     }
 
+    /**
+     * Initialize the class properties with values from the configuration.
+     */
     private function init(): void
     {
         // Get base URL from configuration
@@ -38,10 +43,16 @@ class AirtableBusinessRepository implements IBusinessRepository
         // Get table name from configuration
         $this->table = config('services.airtable.table');
 
+        // Construct the AirTable business URL
         $this->airTableBusinessUrl = $this->baseUrl . "{$this->baseId}/{$this->table}";
     }
 
-    private function httpClient(): \Illuminate\Http\Client\PendingRequest
+    /**
+     * Get an instance of the HTTP client with required headers.
+     *
+     * @return PendingRequest
+     */
+    private function httpClient(): PendingRequest
     {
         return Http::withHeaders([
             'Authorization' => 'Bearer ' . $this->apiKey,
@@ -50,16 +61,17 @@ class AirtableBusinessRepository implements IBusinessRepository
     }
 
     /**
-     * Retrieves all records from the API.
+     * Retrieves all records from the API based on the provided query parameters.
      *
-     * @return array The array of records
-     * @throws AirtableException
-     * @throws RequestException|JsonException if the request fails
+     * @param array $queryParameters The query parameters to filter the records.
+     * @return array The array of records retrieved from the API.
+     * @throws AirtableException If the API request fails or the response does not contain records.
+     * @throws JsonException|RequestException
      */
     public function getAllByQueryParameters(array $queryParameters): array
     {
         // Send a GET request to the API with the necessary headers
-        $response =$this->httpClient()
+        $response = $this->httpClient()
             ->withQueryParameters($queryParameters)
             ->get($this->airTableBusinessUrl);
 
