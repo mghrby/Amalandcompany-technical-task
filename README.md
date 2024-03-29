@@ -26,7 +26,7 @@ The project directory structure is as follows:
 
 - **config/services.php**: Configuration file containing third-party service credentials, including Airtable configuration.
 
-- **.env**: Environment configuration file containing application-specific settings such as database connection details, API keys, and service URLs.
+- **.env**: Environment configuration file containing application-specific settings such as API keys, and service URLs.
 
 - **.env.example**: Example environment configuration file containing placeholders for sensitive information.
 
